@@ -85,7 +85,7 @@ if [[ $SCENARIO = namforecast || $SCENARIO = nhcConsensus ]]; then
    # get rid of the old symbolic links
    rm -rf * 2>> ${SYSLOG}
 
-   # make new symbolic links
+   # copy files 
    for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.14 $SCENARIODIR/fort.15 $SCENARIODIR/fort.13 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 $SCENARIODIR/fort.221 $SCENARIODIR/fort.222 $ADVISDIR/al*.fst $ADVISDIR/bal*.dat $SCENARIODIR/*.zip $SCENARIODIR/*.kmz ; do 
       if [ -e $file ]; then
          cp $file . 2>> ${SYSLOG}
@@ -96,6 +96,7 @@ if [[ $SCENARIO = namforecast || $SCENARIO = nhcConsensus ]]; then
 fi
 # Copy the latest run.properties file to a consistent location in opendap
 #cp run.properties $localtdspath/run.properties.${HPCENVSHORT}.${INSTANCENAME} 2>> ${SYSLOG}
+cp run.properties.json $localtdspath/run.properties.json 2>> ${SYSLOG}
 cp run.properties $localtdspath/run.properties 2>> ${SYSLOG}
 d=`date --utc +"%Y-%h-%dT%H-%M-%S%Z"`
 echo $d > update.time
@@ -104,5 +105,4 @@ touch $CYCLE"Z"
 
 # switch back to the directory where the results were produced 
 cd $SCENARIODIR 2>> ${SYSLOG}
-
 

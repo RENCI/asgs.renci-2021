@@ -205,11 +205,11 @@ for server in ${SERVERS[*]}; do
    echo "post.opendap.${server}.downloadurl : $downloadURL" >> run.properties
 
    # add downloadurl or downloadurl_backup property to run.properties file
-   if [[ ! `grep downloadurl run.properties` =~ downloadurl ]]; then
+   if [[ ! `grep ^downloadurl run.properties` =~ downloadurl ]]; then
       echo "downloadurl : $downloadURL" >> run.properties 2>> ${SYSLOG}
       echo "BOB: opendap_post -->> downloadurl : $downloadURL" 
    else
-      backupNum=`grep downloadurl run.properties | wc -l`
+      backupNum=`grep ^downloadurl run.properties | wc -l`
       echo "downloadurl_backup$backupNum : $downloadURL" >> run.properties 2>> ${SYSLOG}
       echo "BOB: opendap_post -->> downloadurl_backup$backupNum : $downloadURL" 
    fi
