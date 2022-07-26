@@ -36,7 +36,6 @@ echo "Loading properties."
 SCRIPTDIR=`sed -n 's/[ ^]*$//;s/path.scriptdir\s*:\s*//p' $RUNPROPERTIES`
 echo "opendap_post -->> SCRIPTDIR=$SCRIPTDIR"
 source $SCRIPTDIR/properties.sh
-SFTP_SCRIPT='sftp.xfer.coms'
 
 # load run.properties file into associative array
 loadProperties $RUNPROPERTIES
