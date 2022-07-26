@@ -117,7 +117,7 @@ $ppn = $properties{"hpc.job.$jobtype.ppn"};
 #
 # construct command line for running adcprep or serial job
 if ( $parallelism eq "serial" ) {
-   $totalcpu = 1; # these are serial jobs
+   $totalcpu = 2; # these are serial jobs
    $nnodes = 1;   # these are serial jobs
    if ( $jobtype eq "partmesh" || $jobtype =~ /prep/ ) {
       # get number of compute cpus
