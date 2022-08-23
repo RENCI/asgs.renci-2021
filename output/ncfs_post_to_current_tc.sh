@@ -47,7 +47,7 @@ SCENARIO=${properties['scenario']}
 SYSLOG=${properties['monitoring.logging.file.syslog']}
 #CYCLELOG=${properties['monitoring.logging.file.cyclelog']}
 #SCENARIOLOG=${properties['monitoring.logging.file.scenariolog']}
-echo "$SYSLOG" # BOB
+echo "+$SYSLOG+" # BOB
 source $SCRIPTDIR/monitoring/logging.sh
 source $SCRIPTDIR/platforms.sh
 
@@ -82,13 +82,14 @@ localtdspath="/projects/ncfs/opendap/data/"
 # daily results, and one for tropical cyclone results. 
 echo "$SCENARIO"  # BOB
 currentResultsPath="$localtdspath/$currentDir"
-echo "$currentResultsPath"  # BOB
+echo +"$currentResultsPath"+  # BOB
 
 if [ ! -d "$currentResultsPath" ] ; then
-   echo "mkdir-ing $currentResultsPath"
+   echo "mkdir-ing $currentResultsPath" # BOB
    mkdir -p $currentResultsPath
 fi
 cd $currentResultsPath 2>> ${SYSLOG}
+
 # get rid of the old symbolic links
 rm -rf * 2>> ${SYSLOG}
 
@@ -114,6 +115,7 @@ touch "Advisory_$CYCLE"
 touch $STORMNAME
 touch $STORMNUMBER
 touch $SCENARIO
+touch "al$STORMNUMBER_Adv$CYCLE_$SCENARIO"
 echo "updatetime : $d" > meta.json
 echo "advisory : $CYCLE" >> meta.json
 echo "stormname : $STORMNAME" >> meta.json

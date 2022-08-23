@@ -14,7 +14,7 @@
 #PBS -M %notifyuser%
 #SBATCH --job-name="%jobtype%.%scenario%"
 #SBATCH --time=%walltime%
-#SBATCH --ntasks-per-node=%ppn%
+##SBATCH --ntasks-per-node=%ppn%
 #SBATCH --ntasks=%totalcpu%
 #SBATCH --nodes=%nnodes%
 #SBATCH --partition=%queuename%
