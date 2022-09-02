@@ -10,8 +10,7 @@ ASGS 2022 RENCI                  ! 20 CHARACTER ALPANUMERIC RUN IDENTIFICATION
 2                     ! NOLIFA - FINITE AMPLITUDE TERM SELECTION PARAMETER
 1                     ! NOLICA - SPATIAL DERIVATIVE CONVECTIVE SELECTION PARAMETER
 1                     ! NOLICAT - TIME DERIVATIVE CONVECTIVE TERM SELECTION PARAMETER
-7                     ! NWP 
-primitive_weighting_in_continuity_equation
+6                     ! NWP 
 mannings_n_at_sea_floor
 surface_canopy_coefficient
 surface_directional_effective_roughness_length
@@ -23,7 +22,7 @@ sea_surface_height_above_geoid
 %NWS%                      ! NWS - WIND STRESS AND BAROMETRIC PRESSURE OPTION PARAMETER
 1                          ! NRAMP - RAMP FUNCTION OPTION
 9.81                  ! G - ACCELERATION DUE TO GRAVITY - DETERMINES UNITS
-0.005                      ! TAU0 - WEIGHTING FACTOR IN GWCE; original, 0.005
+0.05                      ! TAU0 - WEIGHTING FACTOR IN GWCE; original, 0.005
 %DT%                      ! DT - TIME STEP (IN SECONDS)
 0.00                   ! STATIM - STARTING TIME (IN DAYS)
 0.00                       ! REFTIM - REFERENCE TIME (IN DAYS)
@@ -31,7 +30,7 @@ sea_surface_height_above_geoid
 %RNDAY%                 ! RNDAY - TOTAL LENGTH OF SIMULATION (IN DAYS)
 14.0                     ! DRAMP, DURATION OF RAMP FUNCTION (IN DAYS)
 0.0 1.0 0.0               ! TIME WEIGHTING FACTORS FOR THE GWCE EQUATION
-0.1 0 0 1.0            ! H0 MINIMUM CUTOFF DEPTH, NODEDRYMIN, NODEWETRMP, VELMIN
+0.1 0 0 0.1            ! H0 MINIMUM CUTOFF DEPTH, NODEDRYMIN, NODEWETRMP, VELMIN
 -71.0 27.0            ! SLAM0,SFEA0 - CENTER OF CPP PROJECTION (NOT USED IF ICS=1, NTIP=0, NCOR=0)
 0.001 1. 10. 0.33333      ! FFACTOR - BOTTOM FRICTION COEFFICIENT
 -1.00                     ! ESL - LATERAL EDDY VISCOSITY COEFFICIENT
@@ -1592,5 +1591,7 @@ CF
 sbunya@unc.edu
 %CSYEAR%-%CSMONTH%-%CSDAY% %CSHOUR%:00:00
 &metControl WindDragLimit=0.0025 DragLawString='Garratt' /
+&limitControl slim=99999.0004 windlim=.true. /
+&velwdControl directvelWD=.true. /
 %offsetline%
 
