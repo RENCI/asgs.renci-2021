@@ -112,10 +112,12 @@ d=`date --utc +"%Y-%h-%dT%H-%M-%S%Z"`
 echo $d > update.time
 touch $d
 touch "Advisory_$CYCLE"
-touch $STORMNAME
-touch $STORMNUMBER
-touch $SCENARIO
-touch "al$STORMNUMBER_Adv$CYCLE_$SCENARIO"
+touch "StormName_"$STORMNAME
+touch "StormNumber_"$STORMNUMBER
+touch "Scenario_"$SCENARIO
+str="al"$STORMNUMBER"_Adv"$CYCLE"_"$SCENARIO"_"$GRIDNAME
+touch $str 
+touch "ADCIRCgrid_"$GRIDNAME
 echo "updatetime : $d" > meta.json
 echo "advisory : $CYCLE" >> meta.json
 echo "stormname : $STORMNAME" >> meta.json
