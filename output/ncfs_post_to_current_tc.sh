@@ -33,7 +33,6 @@ fi
 
 # get loadProperties function
 SCRIPTDIR=`sed -n 's/[ ^]*$//;s/path.scriptdir\s*:\s*//p' $RUNPROPERTIES`
-SCRIPTDIR="$HOME/asgs/"
 source $SCRIPTDIR/properties.sh
 # load run.properties file into associative array
 loadProperties $RUNPROPERTIES
@@ -47,7 +46,6 @@ SCENARIO=${properties['scenario']}
 SYSLOG=${properties['monitoring.logging.file.syslog']}
 #CYCLELOG=${properties['monitoring.logging.file.cyclelog']}
 #SCENARIOLOG=${properties['monitoring.logging.file.scenariolog']}
-echo "+$SYSLOG+" # BOB
 source $SCRIPTDIR/monitoring/logging.sh
 source $SCRIPTDIR/platforms.sh
 
@@ -72,9 +70,9 @@ WINDMODEL=${properties["forcing.tropicalcyclone.vortexmodel"]}
 # construct the opendap directory path where the results will be posted
 #
 currentDir=NCFS_CURRENT_DAILY
-if [[ $TROPICALCYCLONE = on ]]; then
-   currentDir=NCFS_CURRENT_TROPICAL
-fi
+#if [[ $TROPICALCYCLONE = on ]]; then
+#   currentDir=NCFS_CURRENT_TROPICAL
+#fi
 localtdspath="/projects/ncfs/opendap/data/"
 
 # Make symbolic links to a single location on the opendap server
@@ -82,7 +80,6 @@ localtdspath="/projects/ncfs/opendap/data/"
 # daily results, and one for tropical cyclone results. 
 echo "$SCENARIO"  # BOB
 currentResultsPath="$localtdspath/$currentDir"
-echo +"$currentResultsPath"+  # BOB
 
 if [ ! -d "$currentResultsPath" ] ; then
    echo "mkdir-ing $currentResultsPath" # BOB
@@ -90,11 +87,12 @@ if [ ! -d "$currentResultsPath" ] ; then
 fi
 cd $currentResultsPath 2>> ${SYSLOG}
 
-# get rid of the old symbolic links
+# get rid of the old stuff
 rm -rf * 2>> ${SYSLOG}
 
 # copy files 
-for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.14 $SCENARIODIR/fort.15 $SCENARIODIR/fort.13 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 $SCENARIODIR/fort.221 $SCENARIODIR/fort.222 $ADVISDIR/al*.fst $ADVISDIR/bal*.dat $SCENARIODIR/*.zip $SCENARIODIR/*.kmz ; do 
+#for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.14 $SCENARIODIR/fort.15 $SCENARIODIR/fort.13 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 $SCENARIODIR/fort.221 $SCENARIODIR/fort.222 $ADVISDIR/al*.fst $ADVISDIR/bal*.dat $SCENARIODIR/*.zip $SCENARIODIR/*.kmz ; do 
+for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.15 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26  $SCENARIODIR/al*.fst $SCENARIODIR/bal*.dat ; do 
    if [ -e $file ]; then
       cp $file . 2>> ${SYSLOG}
    else
@@ -110,7 +108,7 @@ if [ -e  run.properties.json ] ; then
 fi
 d=`date --utc +"%Y-%h-%dT%H-%M-%S%Z"`
 echo $d > update.time
-touch $d
+touch "Posted_at_"$d
 touch "Advisory_$CYCLE"
 touch "StormName_"$STORMNAME
 touch "StormNumber_"$STORMNUMBER

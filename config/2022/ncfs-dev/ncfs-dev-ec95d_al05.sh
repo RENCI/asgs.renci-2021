@@ -79,7 +79,7 @@ INTENDEDAUDIENCE=developers-only    # "general" | "developers-only" | "professio
 
 FINISH_NOWCAST_SCENARIO=( output/opendap_post_nowcast.sh ) # output/run_adda.sh )
 #POSTPROCESS=( accumulateMinMax.sh createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh ncfs_post_to_current_tc.sh )
+POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh ) # ncfs_post_to_current_tc.sh )
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh )
 
 #OPENDAPNOTIFY="asgs.cera.lsu@gmail.com jason.g.fleming@gmail.com"

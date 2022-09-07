@@ -59,6 +59,8 @@ INSTANCENAME=${properties["instancename"]}
 HPCENVSHORT=${properties["hpc.hpcenvshort"]}
 TROPICALCYCLONE=${properties["forcing.tropicalcyclone"]}
 BACKGROUNDMET=${properties["forcing.backgroundmet"]}
+DOWNLOADURL=${properties["downloadurl"]}
+WINDMODEL=${properties["forcing.nwp.model"]}
 
 #--------------------------------------------------------------------------
 #        N C F S   _   C U R R E N T   P U B L I C A T I O N
@@ -75,33 +77,55 @@ localtdspath="/projects/ncfs/opendap/data/"
 # Make symbolic links to a single location on the opendap server
 # to reflect the "latest" results. There are actually two locations, one for 
 # daily results, and one for tropical cyclone results. 
-if [[ $SCENARIO = namforecast || $SCENARIO = nhcConsensus ]]; then
-   currentResultsPath="$localtdspath/$currentDir"
-   if [ ! -d "$currentResultsPath" ] ; then
-      echo "mkdir-ing $currentResultsPath"
-      mkdir -p $currentResultsPath
-   fi
-   cd $currentResultsPath 2>> ${SYSLOG}
-   # get rid of the old symbolic links
-   rm -rf * 2>> ${SYSLOG}
+currentResultsPath="$localtdspath/$currentDir"
+echo "currentResultsPath=+$currentResultsPath+"  # BOB
 
-   # copy files 
-   for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.14 $SCENARIODIR/fort.15 $SCENARIODIR/fort.13 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 $SCENARIODIR/fort.221 $SCENARIODIR/fort.222 $ADVISDIR/al*.fst $ADVISDIR/bal*.dat $SCENARIODIR/*.zip $SCENARIODIR/*.kmz ; do 
-      if [ -e $file ]; then
-         cp $file . 2>> ${SYSLOG}
-      else
-         logMessage "$SCENARIO: $THIS: The directory does not have ${file}."
-      fi
-   done
+if [ ! -d "$currentResultsPath" ] ; then
+   echo "mkdir-ing $currentResultsPath"
+   mkdir -p $currentResultsPath
 fi
+cd $currentResultsPath 2>> ${SYSLOG}
+
+# get rid of the old stuff
+rm -rf * 2>> ${SYSLOG}
+
+# copy files 
+#for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.14 $SCENARIODIR/fort.15 $SCENARIODIR/fort.13 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 $SCENARIODIR/fort.221 $SCENARIODIR/fort.222 $ADVISDIR/al*.fst $ADVISDIR/bal*.dat $SCENARIODIR/*.zip $SCENARIODIR/*.kmz ; do 
+for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.15  $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 ; do 
+   if [ -e $file ]; then
+      cp $file . 2>> ${SYSLOG}
+   else
+      logMessage "$SCENARIO: $THIS: The directory does not have ${file}."
+   fi
+done
+
 # Copy the latest run.properties file to a consistent location in opendap
 #cp run.properties $localtdspath/run.properties.${HPCENVSHORT}.${INSTANCENAME} 2>> ${SYSLOG}
 cp run.properties.json $localtdspath/run.properties.json 2>> ${SYSLOG}
 cp run.properties $localtdspath/run.properties 2>> ${SYSLOG}
 d=`date --utc +"%Y-%h-%dT%H-%M-%S%Z"`
 echo $d > update.time
-touch $d
-touch $CYCLE"Z"
+touch "Posted_at_"$d
+
+touch "DateCycle_"$CYCLE"Z"
+touch "ADCIRCgrid_"$GRIDNAME
+touch "Scenario_"$SCENARIO
+str=$WINDMODEL"_"$CYCLE"_"$SCENARIO"_"$GRIDNAME
+touch $str 
+
+echo "updatetime : $d" > meta.json
+echo "advisory : NA" >> meta.json
+echo "datecycle : $CYCLE""Z" >> meta.json
+echo "stormname : synoptic" >> meta.json
+echo "stormnumber : NA" >> meta.json
+echo "scenario : $SCENARIO" >> meta.json
+echo "asgsadmin : $ASGSADMIN" >> meta.json
+echo "gridname : $GRIDNAME" >> meta.json
+echo "instancename : $INSTANCENAME" >> meta.json
+echo "hpcenv : $HPCENVSHORT" >> meta.json
+echo "windmodel : $WINDMODEL" >> meta.json
+echo "backgroundmet : $BACKGROUNDMET" >> meta.json
+echo "downloadurl : $DOWNLOADURL" >> meta.json
 
 # switch back to the directory where the results were produced 
 cd $SCENARIODIR 2>> ${SYSLOG}
