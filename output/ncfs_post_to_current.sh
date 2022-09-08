@@ -34,9 +34,9 @@ fi
 # get loadProperties function
 SCRIPTDIR=`sed -n 's/[ ^]*$//;s/path.scriptdir\s*:\s*//p' $RUNPROPERTIES`
 source $SCRIPTDIR/properties.sh
+
 # load run.properties file into associative array
 loadProperties $RUNPROPERTIES
-THIS="output/opendap_post.sh"
 CONFIG=${properties['config.file']}
 CYCLEDIR=${properties['path.advisdir']}
 CYCLE=${properties['advisory']}
@@ -69,9 +69,9 @@ WINDMODEL=${properties["forcing.nwp.model"]}
 # construct the opendap directory path where the results will be posted
 #
 currentDir=NCFS_CURRENT_DAILY
-if [[ $TROPICALCYCLONE = on ]]; then
-   currentDir=NCFS_CURRENT_TROPICAL
-fi
+#if [[ $TROPICALCYCLONE = on ]]; then
+#   currentDir=NCFS_CURRENT_TROPICAL
+#fi
 localtdspath="/projects/ncfs/opendap/data/"
 
 # Make symbolic links to a single location on the opendap server

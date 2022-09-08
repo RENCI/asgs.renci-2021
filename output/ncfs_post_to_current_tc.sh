@@ -69,10 +69,8 @@ WINDMODEL=${properties["forcing.tropicalcyclone.vortexmodel"]}
 #
 # construct the opendap directory path where the results will be posted
 #
-currentDir=NCFS_CURRENT_DAILY
-#if [[ $TROPICALCYCLONE = on ]]; then
-#   currentDir=NCFS_CURRENT_TROPICAL
-#fi
+#currentDir=NCFS_CURRENT_DAILY
+currentDir=NCFS_CURRENT_TROPICAL
 localtdspath="/projects/ncfs/opendap/data/"
 
 # Make symbolic links to a single location on the opendap server
@@ -93,7 +91,8 @@ rm -rf * 2>> ${SYSLOG}
 # copy files 
 #for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.14 $SCENARIODIR/fort.15 $SCENARIODIR/fort.13 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26 $SCENARIODIR/fort.221 $SCENARIODIR/fort.222 $ADVISDIR/al*.fst $ADVISDIR/bal*.dat $SCENARIODIR/*.zip $SCENARIODIR/*.kmz ; do 
 for file in $SCENARIODIR/fort.*.nc $SCENARIODIR/swan*.nc $SCENARIODIR/max*.nc $SCENARIODIR/min*.nc $SCENARIODIR/run.properties $SCENARIODIR/fort.15 $SCENARIODIR/fort.22 $SCENARIODIR/fort.26  $SCENARIODIR/al*.fst $SCENARIODIR/bal*.dat ; do 
-   if [ -e $file ]; then
+   if [ -e "$file" ]; then
+      echo "Copying $file to `pwd` ... "  # BOB 
       cp $file . 2>> ${SYSLOG}
    else
       logMessage "$SCENARIO: $THIS: The directory does not have ${file}."
