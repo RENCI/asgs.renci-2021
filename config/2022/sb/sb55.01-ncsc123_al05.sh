@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=ncsc123-nam-sb55.01      # "name" of this ASGS process
+INSTANCENAME=ncsc123-al05-sb55.01      # "name" of this ASGS process
 SCRATCHDIR=/scratch/sbunya/${INSTANCENAME}
 RMQMessaging_Transmit=on
 QSCRIPTTEMPLATE=$SCRIPTDIR/config/2022/sb/qscript.template.renci
@@ -44,18 +44,18 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022081300  #  2020080100  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2022081500  #  2020080100  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
 TIDEFAC=on                # tide factor recalc
-   HINDCASTLENGTH=20    # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on          # NAM download/forcing
+   HINDCASTLENGTH=16    # length of initial hindcast, from cold (days)
+BACKGROUNDMET=off          # NAM download/forcing
    FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off       # tropical cyclone forcing
-   STORM=-1               # storm number, e.g. 05=ernesto in 2006
+TROPICALCYCLONE=on       # tropical cyclone forcing
+   STORM=05               # storm number, e.g. 05=ernesto in 2006
    YEAR=2022              # year of the storm
 WAVES=on                 # wave forcing
    REINITIALIZESWAN=no    # used to bounce the wave solution
@@ -101,7 +101,7 @@ case $si in
        ENSTORM=nowcast
        ;;
     0)
-       ENSTORM=namforecast
+       ENSTORM=nhcOfcl
        ;;
     1)
        ENSTORM=namforecastWind10m
