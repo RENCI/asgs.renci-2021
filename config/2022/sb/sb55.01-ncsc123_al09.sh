@@ -27,11 +27,16 @@
 
 # Fundamental
 
-INSTANCENAME=ncsc123-al09-sb55.01      # "name" of this ASGS process
-SCRATCHDIR=/scratch/sbunya/${INSTANCENAME}
+SCRIPTDIR="$HOME/asgs.renci-2021"    # ASGS executables
+INSTANCENAME=ncsc123-al09-sb55.01-psc      # "name" of this ASGS process
+SCRATCHDIR="$HOME/results/${INSTANCENAME}"
+RMQMessaging_Enable=on
 RMQMessaging_Transmit=on
-QSCRIPTTEMPLATE=$SCRIPTDIR/config/2022/sb/qscript.template.700MB.renci
-ADCIRCDIR=/scratch/sbunya/ADCIRC/v55.01release.ht1.mvapich2/work
+QSCRIPTTEMPLATE=$SCRIPTDIR/config/2022/ncfs-dev/qscript.template-bridges2-RM-Shared
+ADCIRCDIR="$HOME/ADCIRC/v53release/work"  # ADCIRC executables
+SWANDIR="$ADCIRCDIR/../swan/"    # SWAN executables
+INPUTDIR=$SCRIPTDIR/input/meshes/ec95d     # grid and other input files
+OUTPUTDIR=$SCRIPTDIR/output              # post processing scripts
 
 # Input files and templates
 
@@ -47,11 +52,13 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 COLDSTARTDATE=2022090700  #  2020080100  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null
+#COLDSTARTDATE=auto  # 2022090700  #  2020080100  # calendar year month day hour YYYYMMDDHH24
+#HOTORCOLD=hotstart       # "hotstart" or "coldstart"
+#LASTSUBDIR=http://tds.renci.org/thredds/fileServer/2022/al09/28/NCSC_SAB_v1.23/hatteras.renci.org/ncsc123-al09-sb55.01/nhcOfcl
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
-
 TIDEFAC=on                # tide factor recalc
-   HINDCASTLENGTH=16    # length of initial hindcast, from cold (days)
+   HINDCASTLENGTH=19    # length of initial hindcast, from cold (days)
 BACKGROUNDMET=off          # NAM download/forcing
    FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=on       # tropical cyclone forcing
@@ -73,15 +80,16 @@ NCPUCAPACITY=9999
 #NCPU=511                     # number of compute CPUs for all simulations
 #NCPUCAPACITY=512
 NUMWRITERS=4
-ACCOUNT=null
-QUEUENAME=batch
+#ACCOUNT=null
+QUEUENAME="RM-shared"
 
 # Post processing and publication
 
 INTENDEDAUDIENCE="developers-only" # "general" # ( | "developers-only" | "professional"
+FINISH_NOWCAST_SCENARIO=( output/opendap_post_nowcast.sh output/opendap_post_nowcast_k8.sh ) # output/run_adda.sh )
 #POSTPROCESS=( accumulateMinMax.sh createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh )
-POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh opendap_post_nowcast.sh transmit_rps.sh ncfs_post_to_current_tc.sh )
+POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh opendap_post_k8.sh transmit_rps.sh ncfs_post_to_current_tc.sh )
 #OPENDAPNOTIFY="asgs.cera.lsu@gmail.com jason.g.fleming@gmail.com"
 #OPENDAPNOTIFY="bblanton@renci.org, asgs.cera.lsu@gmail.com, rluettich1@gmail.com, jason.g.fleming@gmail.com, asgsnotifications@opayq.com, cera.asgs.tk@gmail.com, asgsnotes4ian@gmail.com, janelle.fleming@seahorsecoastal.com"
 #OPENDAPNOTIFY="sbunya@gmail.com"
