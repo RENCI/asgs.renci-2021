@@ -309,7 +309,7 @@ init_bridges2()
   ARCHIVE=enstorm_pedir_removal.sh
   #ARCHIVEBASE=/corral-tacc/utexas/hurricane/ASGS
   #ARCHIVEDIR=2020 # is this used?
-  TDS=( renci_tds )
+  TDS=( renci_tds renci_tds-k8)
   MAKEJOBS=8
 }
 #

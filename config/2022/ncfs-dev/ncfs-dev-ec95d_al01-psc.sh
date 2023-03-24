@@ -90,8 +90,8 @@ FINISH_NOWCAST_SCENARIO=( output/opendap_post_nowcast.sh output/opendap_post_now
 POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh opendap_post_k8.sh transmit_rps.sh )
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh )
 
-#OPENDAPNOTIFY="asgs.cera.lsu@gmail.com jason.g.fleming@gmail.com"
-OPENDAPNOTIFY="bblanton@renci.org"
+#OPENDAPNOTIFY="bblanton@renci.org"
+OPENDAPNOTIFY="bblanton@renci.org, rluettich1@gmail.com, sbunya@gmail.com"
 NOTIFY_SCRIPT=ncfs_nam_notify.sh
 
 # Scenario package

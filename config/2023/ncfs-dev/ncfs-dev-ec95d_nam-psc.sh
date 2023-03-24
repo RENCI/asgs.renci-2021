@@ -28,50 +28,44 @@
 # Fundamental
 RMQMessaging_Enable="on"
 RMQMessaging_Transmit="on"
-QSCRIPTTEMPLATE=$SCRIPTDIR/config/2022/ncfs-dev/qscript.template-bridges2-RM-Shared
+QSCRIPTTEMPLATE=$SCRIPTDIR/config/2023/ncfs-dev/qscript.template-bridges2-RM-Shared
 
-INSTANCENAME=hsofs-nam-bob-2022-psc      # "name" of this ASGS process
+INSTANCENAME=ec95d-nam-bob-psc      # "name" of this ASGS process
 SCRATCHDIR="$HOME/results/${INSTANCENAME}"
 TDS=( renci_tds renci_tds-k8 )
 
 # Source file paths
-HM=$HOME
+HM=/jet/home/bblanton
 #ADCIRCDIR="$HM/ADCIRC/fixedblendandContEqOffset_adcv53-dev-238-g62e8042-modified/work"  # ADCIRC executables
 ADCIRCDIR="$HM/ADCIRC/v53release/work"  # ADCIRC executables
 SWANDIR="$ADCIRCDIR/../swan/"    # SWAN executables
 SCRIPTDIR="$HM/asgs.renci-2021"    # ASGS executables
+INPUTDIR=$SCRIPTDIR/input/meshes/ec95d     # grid and other input files
 OUTPUTDIR=${SCRIPTDIR}/output              # post processing scripts
 
-
-
 # Input files and templates
-GRIDNAME=hsofs
+
+GRIDNAME=ec95d
 source $SCRIPTDIR/config/mesh_defaults.sh
-CONTROLTEMPLATE=hsofs_explicit.15.template
-CONTROLPROPERTIES=${CONTROLTEMPLATE}.properties
-#NAFILE=hsofs.with_advstate.13
-NAFILE=hsofs.13
-NAPROPERTIES=${NAFILE}.properties
-#STATICOFFSET=0.2
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022101000  #  2020080100  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2023011000  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
-TIDEFAC=on                # tide factor recalc
-   HINDCASTLENGTH=14    # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on          # NAM download/forcing
+TIDEFAC=on               # tide factor recalc
+   HINDCASTLENGTH=22.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=on         # NAM download/forcing
    FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off       # tropical cyclone forcing
-   STORM=-1               # storm number, e.g. 05=ernesto in 2006
-   YEAR=2022              # year of the storm
+TROPICALCYCLONE=off      # tropical cyclone forcing
+   STORM=-1              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2021             # year of the storm
 WAVES=on                 # wave forcing
-   REINITIALIZESWAN=no    # used to bounce the wave solution
-VARFLUX=off               # variable river flux forcing
+   REINITIALIZESWAN=no   # used to bounce the wave solution
+VARFLUX=off              # variable river flux forcing
    RIVERSITE=data.disaster.renci.org
    RIVERDIR=/opt/ldm/storage/SCOOP/RHLRv9-OKU
    RIVERUSER=bblanton
@@ -80,29 +74,31 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=511                     # number of compute CPUs for all simulations
-NCPUCAPACITY=512
-NUMWRITERS=1
+NCPU=32                    # number of compute CPUs for all simulations
+NCPUCAPACITY=64
+NUMWRITERS=0
 ACCOUNT=null
-QUEUENAME="RM"
+#EXCLUDE="compute-9-xx"
+QUEUENAME="RM-shared"
 
 # Post processing and publication
 
-INTENDEDAUDIENCE="developers-only" 
-#POSTPROCESS=( accumulateMinMax.sh createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-#POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh )
-POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh opendap_post_k8.sh transmit_rps.sh )
+INTENDEDAUDIENCE=developers-only    # "general" | "developers-only" | "professional"
+
 FINISH_NOWCAST_SCENARIO=( output/opendap_post_nowcast.sh output/opendap_post_nowcast_k8.sh ) # output/run_adda.sh )
+#POSTPROCESS=( accumulateMinMax.sh createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+POSTPROCESS=( createOPeNDAPFileList.sh opendap_post.sh opendap_post_k8.sh transmit_rps.sh )
+#POSTPROCESS=( createOPeNDAPFileList.sh opendap_post_k8.sh transmit_rps.sh )
+#POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh transmit_rps.sh )
 
 #OPENDAPNOTIFY="asgs.cera.lsu@gmail.com jason.g.fleming@gmail.com"
-#OPENDAPNOTIFY="bblanton@renci.org, asgs.cera.lsu@gmail.com, rluettich1@gmail.com, jason.g.fleming@gmail.com, asgsnotifications@opayq.com, cera.asgs.tk@gmail.com, asgsnotes4ian@gmail.com, janelle.fleming@seahorsecoastal.com"
 OPENDAPNOTIFY="bblanton@renci.org"
 NOTIFY_SCRIPT=ncfs_nam_notify.sh
 
 # Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=1 
+SCENARIOPACKAGESIZE=1
 case $si in
    -2) 
        ENSTORM=hindcast
