@@ -10,7 +10,7 @@ destinations['renci-prod']={
  'queue_name': 'asgs_queue',
  'queue_user': 'asgs',
  'queue_passwd': 'ZippityD0Da',
- 'queue_address': 'asgs-monitor.renci.org',
+ 'queue_address': 'asgs-rabbitmq-queue.apps.renci.org', 
  'queue_port': 5672
 }
 destinations['renci-dev']={

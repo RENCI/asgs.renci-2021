@@ -561,11 +561,27 @@ writeTDSProperties()
       #OPENDAPBASEDIR=/projects/ees/DataLayers/asgs/
       ;;
 
-   "renci_tds-k8")
+   "renci_tds-k8-prod")
       # THREDDS Data Server (TDS, i.e., OPeNDAP server) at RENCI, in K8S
-      THREDDSHOST=apsviz-sftp-dev-conn.apps.renci.org 
+      THREDDSHOST=apsviz-sftp.apps.renci.org 
+      THREDDSDOWNLOADHOST=apsviz-thredds.apps.renci.org
+      OPENDAPHOST=renci_tds-k8-prod     # alias in $HOME/.ssh/config
+      OPENDAPPORT=":2022"
+      OPENDAPDOWNLOADPORT=""
+      OPENDAPPROTOCOL="https"
+      OPENDAPBASEDIR=/thredds-data
+      #echo "post.opendap.${SERVER}.linkablehosts : ( null )" >> run.properties
+      #echo "post.opendap.${SERVER}.copyablehosts : ( hatteras )" >> run.properties
+      #DOWNLOADPREFIX="http://tds.renci.org:8080/thredds/fileServer/DataLayers/asgs/"
+      #CATALOGPREFIX="http://tds.renci.org:8080/thredds/DataLayers/asgs/"
+      #OPENDAPBASEDIR=/projects/ees/DataLayers/asgs/
+      ;;
+
+   "renci_tds-k8-dev")
+      # THREDDS Data Server (TDS, i.e., OPeNDAP server) at RENCI, in K8S
+      THREDDSHOST=apsviz-sftp-dev.apps.renci.org 
       THREDDSDOWNLOADHOST=apsviz-thredds-dev.apps.renci.org
-      OPENDAPHOST=renci_tds-k8     # alias in $HOME/.ssh/config
+      OPENDAPHOST=renci_tds-k8-dev     # alias in $HOME/.ssh/config
       OPENDAPPORT=":2022"
       OPENDAPDOWNLOADPORT=""
       OPENDAPPROTOCOL="https"

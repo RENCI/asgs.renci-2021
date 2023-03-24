@@ -134,7 +134,7 @@ for server in ${SERVERS[*]}; do
       continue
    fi
    # skip all servers except renci k8
-   if [[ $server != "renci_tds-k8" ]]; then
+   if [[ "${server,,}" != *"renci_tds-k8"* ]] ; then
       continue
    fi
 

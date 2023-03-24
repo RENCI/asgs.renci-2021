@@ -9,9 +9,9 @@ queue_name='asgs_props'
 destinations={}
 destinations['renci-prod']={
  'queue_name': queue_name,
- 'queue_user': 'asgs',
- 'queue_passwd': 'ZippityD0Da',
- 'queue_address': 'asgs-monitor.renci.org',
+ 'queue_user': 'asgsuser',
+ 'queue_passwd': '7LLi7Nojgg',
+ 'queue_address': 'asgs-rabbitmq-queue.apps.renci.org',
  'queue_port': 5672
 }
 destinations['renci-dev']={
