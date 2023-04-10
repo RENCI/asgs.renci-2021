@@ -563,7 +563,7 @@ writeTDSProperties()
 
    "renci_tds-k8-prod")
       # THREDDS Data Server (TDS, i.e., OPeNDAP server) at RENCI, in K8S
-      THREDDSHOST=apsviz-sftp.apps.renci.org 
+      THREDDSHOST=apsviz-sftp-conn.apps.renci.org 
       THREDDSDOWNLOADHOST=apsviz-thredds.apps.renci.org
       OPENDAPHOST=renci_tds-k8-prod     # alias in $HOME/.ssh/config
       OPENDAPPORT=":2022"
@@ -579,7 +579,7 @@ writeTDSProperties()
 
    "renci_tds-k8-dev")
       # THREDDS Data Server (TDS, i.e., OPeNDAP server) at RENCI, in K8S
-      THREDDSHOST=apsviz-sftp-dev.apps.renci.org 
+      THREDDSHOST=apsviz-sftp-dev-conn.apps.renci.org 
       THREDDSDOWNLOADHOST=apsviz-thredds-dev.apps.renci.org
       OPENDAPHOST=renci_tds-k8-dev     # alias in $HOME/.ssh/config
       OPENDAPPORT=":2022"

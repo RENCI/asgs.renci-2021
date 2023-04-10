@@ -8,8 +8,8 @@ import json
 destinations={}
 destinations['renci-prod']={
  'queue_name': 'asgs_queue',
- 'queue_user': 'asgs',
- 'queue_passwd': 'ZippityD0Da',
+ 'queue_user': 'asgsuser',
+ 'queue_passwd': '7LLi7Nojgg',
  'queue_address': 'asgs-rabbitmq-queue.apps.renci.org', 
  'queue_port': 5672
 }
